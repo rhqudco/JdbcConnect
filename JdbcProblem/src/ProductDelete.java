@@ -1,10 +1,13 @@
-import java.sql.*;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
-public class BookInsertEx {
+public class ProductDelete {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
+        System.out.println("삭제할 상품번호 입력");
+        String PrdNo = scan.next();
         try {
             String url = "jdbc:mysql://localhost:3306/sqldb6?serverTimezone=UTC";
             String user = "root";
@@ -13,23 +16,11 @@ public class BookInsertEx {
             if (con != null) {
                 System.out.println("연결 성공");
             }
-            String bookNo = "1006";
-            String bookName = "알고리즘";
-            String bookAuthor = "김철수";
-            int bookPrice = 25000;
-            String bookDate = "김철수";
-            int bookStock = 10;
-            String pubNo = "1";
 
-            String sql = "insert into book values(?,?,?,?,?,?,?)";
+            String sql = "delete from Product where prdNo=?";
             PreparedStatement pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, bookNo);
-            pstmt.setString(2, bookName);
-            pstmt.setString(3, bookAuthor);
-            pstmt.setInt(4, bookPrice);
-            pstmt.setString(5, bookDate);
-            pstmt.setInt(6, bookStock);
-            pstmt.setString(7, pubNo);
+            pstmt.setString(1, PrdNo);
+            // 성공 여부를 출력하기 위해 result에 값을 넣어서 확인
             int result = pstmt.executeUpdate();
             if(result > 0) {
                 System.out.println("성공");

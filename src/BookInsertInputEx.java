@@ -1,8 +1,9 @@
-import java.sql.*;
-import java.util.Date;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Scanner;
 
-public class BookInsertEx {
+public class BookInsertInputEx {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         try {
@@ -13,13 +14,20 @@ public class BookInsertEx {
             if (con != null) {
                 System.out.println("연결 성공");
             }
-            String bookNo = "1006";
-            String bookName = "알고리즘";
-            String bookAuthor = "김철수";
-            int bookPrice = 25000;
-            String bookDate = "김철수";
-            int bookStock = 10;
-            String pubNo = "1";
+            System.out.print("도서번호 ");
+            String bookNo = scan.next();
+            System.out.print("도서명 ");
+            String bookName = scan.nextLine();
+            System.out.print("저자명 ");
+            String bookAuthor = scan.next();
+            System.out.print("가격 ");
+            int bookPrice = scan.nextInt();
+            System.out.print("발행일 ");
+            String bookDate = scan.next();
+            System.out.print("재고 ");
+            int bookStock = scan.nextInt();
+            System.out.print("출판사 번호  ");
+            String pubNo = scan.next();
 
             String sql = "insert into book values(?,?,?,?,?,?,?)";
             PreparedStatement pstmt = con.prepareStatement(sql);
