@@ -1,12 +1,14 @@
-package student;
+package db8AddInterface;
+
+import student.StudentDAO;
+import student.StudentDTO;
 
 import java.util.Scanner;
 
-public class StudentEx {
-    public static void main(String[] args) {
+public class StudentInsertArr {
+    public void studentInsert () {
         Scanner scan = new Scanner(System.in);
         StudentDAO studentDAO = new StudentDAO();
-        //studentDAO.selectStudent();
 
         System.out.print("학번 입력 ");
         String stdNo = scan.nextLine();
@@ -30,6 +32,5 @@ public class StudentEx {
         StudentDTO studentDTO =
                 new StudentDTO(stdNo, stdName, stdYear, stdAddress, stdBirthday, dptNo);
         studentDAO.insertStudent(studentDTO);
-        studentDAO.selectStudent();
     }
 }

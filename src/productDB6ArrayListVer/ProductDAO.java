@@ -1,6 +1,12 @@
-package productDB5;
+package productDB6ArrayListVer;
 
-import java.sql.*;
+import db6ArrayListVer.StudentDTOArr;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class ProductDAO {
     Connection connection;
@@ -26,26 +32,28 @@ public class ProductDAO {
         }
     }
     // select Method
-    public void selectProduct()  {
+    public ArrayList<ProductDTO> selectProduct() {
+        ArrayList<ProductDTO> dataSet = null;
         try {
             String sql = "select * from product order by prdNo";
             preparedStatement = connection.prepareStatement(sql);
             resultset = preparedStatement.executeQuery(sql);
 
+            dataSet = new ArrayList<ProductDTO>();
+
             while (resultset.next()) {
-                String prdNo = resultset.getString(1);
-                String prdName = resultset.getString(2);
-                int prdPrice = resultset.getInt(3);
-                String prdMaker = resultset.getString(4);
-                String prdColor = resultset.getString(5);
-                String ctgNo = resultset.getString(6);
-                System.out.format("%-10s \t %-10s\t %-4d\t %-20s\t %13s\t %s  \n",
-                        prdNo, prdName, prdPrice, prdMaker, prdColor, ctgNo);
+                dataSet.add(new ProductDTO(resultset.getString(1),
+                        resultset.getString(2),
+                        resultset.getInt(3),
+                        resultset.getString(4),
+                        resultset.getString(5),
+                        resultset.getString(6))); // DTO 1개가 1행에 해당
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println("select 오류 발생!");
             e.printStackTrace();
         }
+        return dataSet; // ArrayList<ProductDTO> 타입
     }
     // insert Method
     public void insertProduct(ProductDTO productDTO) {
